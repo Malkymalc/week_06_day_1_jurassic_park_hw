@@ -3,7 +3,7 @@ const Park = require('../models/park.js');
 const Dinosaur = require('../models/dinosaur.js');
 
 describe('Park', function() {
-  let park, tRex, diplo, centaur, pegasus, onionCat, cabbageDog;
+  let park, tRex1, tRex2, tRex3, diplo, centaur, pegasus, onionCat, cabbageDog;
 
   beforeEach(function () {
     tRex1 = new Dinosaur('tRex', 'grass', 5);
@@ -15,7 +15,7 @@ describe('Park', function() {
     onionCat = new Dinosaur('onionCat', 'what it wants', 9000);
     cabbageDog = new Dinosaur('cabbageDog', 'guess', 90);
 
-    park = new Park(`bob's park`, 50, [tRex, diplo, centaur, pegasus, onionCat]);
+    park = new Park(`bob's park`, 50, [tRex1, tRex2, tRex3, diplo, centaur, pegasus, onionCat]);
   })
 
   it('should have a name', function(){
@@ -30,19 +30,19 @@ describe('Park', function() {
 
   it('should have a collection of dinosaurs', function(){
     actual = park.dinos;
-    assert.deepStrictEqual(actual, [tRex1, tRex2, diplo, centaur, pegasus, onionCat]);
+    assert.deepStrictEqual(actual, [tRex1, tRex2, tRex3, diplo, centaur, pegasus, onionCat]);
   });
 
   it('should be able to add a dinosaur to its collection', function(){
     park.addDino(cabbageDog);
     actual = park.dinos;
-    assert.deepStrictEqual(actual, [tRex1, tRex2, diplo, centaur, pegasus, onionCat, cabbageDog]);
+    assert.deepStrictEqual(actual, [tRex1, tRex2, tRex3, diplo, centaur, pegasus, onionCat, cabbageDog]);
   });
 
   it('should be able to remove a dinosaur from its collection', function(){
     park.removeDino(cabbageDog);
     actual = park.dinos;
-    assert.deepStrictEqual(actual, [tRex1, tRex2, diplo, centaur, pegasus, onionCat]);
+    assert.deepStrictEqual(actual, [tRex1, tRex2, tRex3, diplo, centaur, pegasus, onionCat]);
   });
 
   it('should be able to find the dinosaur that attracts the most visitors', function(){
@@ -52,31 +52,31 @@ describe('Park', function() {
 
   it('should be able to find all dinosaurs of a particular species', function(){
     actual = park.getBySpecies('tRex');
-    assert.deepStrictEqual(actual, [tRex1, tRex2]);
+    assert.deepStrictEqual(actual, [tRex1, tRex2, tRex3]);
   });
 
   it('should be able to remove all dinosaurs of a particular species', function(){
     park.speciesCleanse('tRex');
     actual = park.dinos;
-    assert.strictEqual(actual, [diplo, centaur, pegasus, onionCat]);
+    assert.deepStrictEqual(actual, [diplo, centaur, pegasus, onionCat]);
   });
 
 // Calculate the total number of visitors per day
   it('should be able to calculate total number of visitors per day', function(){
     actual = park.totalDailyVisitors();
-    assert.strictEqual(actual, 9274);
+    assert.strictEqual(actual, 9159);
   });
 
   // Calculate the total number of visitors per year
   it('should be able to calculate the total number of visitors per year', function(){
     actual = park.totalYearlyVisitors();
-    assert.strictEqual(actual, 3385010);
+    assert.strictEqual(actual, (9159 * 365.25));
   });
 
   // Calculate the total revenue from ticket sales for one year
   it('should be able to calculate the total revenue from ticket sales for one years', function(){
     actual = park.totalYearlyRevenue();
-    assert.strictEqual(actual, 56);
+    assert.strictEqual(actual, (9159 * 365.25 * 50));
   });
 
   //Provide an object containing each of the diet types and the number of dinosaurs in the park of that diet type
